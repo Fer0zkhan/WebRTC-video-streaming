@@ -1,12 +1,10 @@
 const socket = io("/");
 const videoGrid = document.getElementById("video-grid");
 
-const myPeer = new Peer(undefined, {
-    host: "/",
-    port: "3001"
-});
+const myPeer = new Peer(undefined);
+console.log(myPeer);
 const myVideo = document.createElement("video");
-myVideo.muted = false;
+myVideo.muted = true;
 const peer = {};
 
 navigator.mediaDevices.getUserMedia({
@@ -28,7 +26,7 @@ navigator.mediaDevices.getUserMedia({
 });
 
 myPeer.on("open", id => {
-    socket.emit("join-room", ROOM_ID, id);
+    socket.emit("join-room", 10, id);
 })
 
 
@@ -59,7 +57,7 @@ function connectToNewUser(userId, stream) {
 
 function addVideoStream(video, stream) {
     video.srcObject = stream;
-    video.addEventListener("loadedmetadata", () => {
+    video.addEventListener("loadmetadata", () => {
         video.play();
     });
 
