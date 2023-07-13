@@ -33,6 +33,13 @@ io.on("connection" ,(socket) => {
     });
 });
 
+app.use("*", (req, res) => {
+    res.status(404).json({
+        status: false,
+        message: `Page not found ${req.orignalUrl}`
+    });
+});
+
 //Server
 server.listen(port, () => {
     console.log(`Server Running at Port : ${port}`);
